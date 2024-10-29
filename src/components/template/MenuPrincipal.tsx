@@ -5,7 +5,11 @@ import Logo from "./Logo";
 import MenuPrincipalItem from "./MenuPrincipalItem";
 import MenuPrincipalSecao from "./MenuPrincipalSecao";
 import Flex from "./Flex";
-import { IconAppWindow, IconArrowsLeftRight, IconDimensions, IconFishHook, IconLetterCase, IconLock, IconMathGreater, IconRefreshAlert, IconSection, IconUser } from "@tabler/icons-react";
+import { IconAppWindow, IconArrowsLeftRight, IconDimensions, IconFishHook, IconLetterCase, IconLock, IconMathGreater, IconRefreshAlert, IconSection, IconShoppingCart, IconUser } from "@tabler/icons-react";
+import useToggle from "@/data/hooks/useToggle";
+import { use, useEffect } from "react";
+import useTamanhoJanela from "@/data/hooks/useTamanhoJanela";
+import useBoolean from "@/data/hooks/useBoolean";
 
 export default function MenuPrincipal() {
     const secoes = [
@@ -33,9 +37,26 @@ export default function MenuPrincipal() {
                 ],      
 
         },
+        {
+            titulo: "Contexto",
+            aberta: true,
+            itens: [{titulo: "Loja", url: "/contexto/loja", tag:"useContext",icone: <IconShoppingCart />},                   
+                ],      
+
+        },
 
     ];
-    const mini = false;
+    const [mini,toggleMini, miniTrue, miniFalse] = useBoolean(false);
+    let tamanho = useTamanhoJanela();
+
+    useEffect(() => {
+
+        if (tamanho ==="md" || tamanho==="sm") {
+            miniTrue();
+
+        }
+        
+    },[tamanho]);
     function renderizarSecoes() {
         return secoes.map((secao: MenuSecao) => (
             <MenuPrincipalSecao key={secao.titulo} titulo={secao.titulo} mini={mini} aberta={secao.aberta}>
@@ -69,6 +90,10 @@ export default function MenuPrincipal() {
         >
             <Flex center className="m-7">
                 {!mini && <Logo />}
+                <div className="cursor-pointer" onClick={toggleMini}>
+                    {mini ? <IconMenu /> : <IconX />    }
+                </div>
+
             </Flex>
             <nav className="flex flex-col gap-4 m-7">{renderizarSecoes()}</nav>
         </aside>

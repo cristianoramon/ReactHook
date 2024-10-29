@@ -4,14 +4,12 @@ import { use, useEffect, useState } from "react";
     
 function getTamanhoJanela() {
 
-
-
     if ( typeof window !== "undefined") {
 
         const {innerWidth:largura,innerHeight:altura} = window;
         return {largura,altura};
 
-    }else{  
+    } else {  
         return {largura:-1,altura:-1};    
     }
 }
