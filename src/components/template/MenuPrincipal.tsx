@@ -10,56 +10,16 @@ import useToggle from "@/data/hooks/useToggle";
 import { use, useEffect } from "react";
 import useTamanhoJanela from "@/data/hooks/useTamanhoJanela";
 import useBoolean from "@/data/hooks/useBoolean";
+import useMenu from "@/data/hooks/useMenu";
 
 export default function MenuPrincipal() {
-    const secoes = [
-        {
-            titulo: "Essenciais",
-            aberta: false,
-            itens: [{titulo: "Contador", url: "/essenciais/contador", tag:"useState",icone: <IconFishHook />},
-                    {titulo: "Votacao", url: "/essenciais/votacao", tag:"useState",icone: <IconUser />},
-                    {titulo: "Consulta Api", url: "/essenciais/consultaAPI", tag:"useEffect",icone: <IconArrowsLeftRight />},
-                    {titulo: "Maior", url: "/essenciais/maior", tag:"useEffect",icone: <IconMathGreater />},
-                    {titulo: "Contagem Caracteres", url: "/essenciais/contagemCaracteres", tag:"useEffect",icone: <IconLetterCase />},
-                    {titulo: "State Vs Referencia", url: "/essenciais/stateVsRef", tag:"useRef",icone: <IconRefreshAlert />}, 
-                    {titulo: "Referenciando elemento", url: "/essenciais/refElemento", tag:"useRef",icone: <IconSection />},  
-                    {titulo: "Contagem Caracteres", url: "/essenciais/contagemCaracteresRef", tag:"useRef",icone: <IconLetterCase />},    
-                ],      
-
-        },
-        {
-            titulo: "Personalizados",
-            aberta: true,
-            itens: [{titulo: "Modal", url: "/personalizados/modal", tag:"peronalizado",icone: <IconAppWindow />},
-                    {titulo: "Tamanho Janela", url: "/personalizados/tamanhoJanela", tag:"peronalizado",icone: <IconDimensions />},         
-                    {titulo: "Validando senha", url: "/personalizados/senha", tag:"peronalizado",icone: <IconLock />},           
-
-                ],      
-
-        },
-        {
-            titulo: "Contexto",
-            aberta: true,
-            itens: [{titulo: "Loja", url: "/contexto/loja", tag:"useContext",icone: <IconShoppingCart />},                   
-                ],      
-
-        },
-
-    ];
-    const [mini,toggleMini, miniTrue, miniFalse] = useBoolean(false);
-    let tamanho = useTamanhoJanela();
-
-    useEffect(() => {
-
-        if (tamanho ==="md" || tamanho==="sm") {
-            miniTrue();
-
-        }
-        
-    },[tamanho]);
+    
+    const {secoes,mini,toggleMini,alternarSecao} = useMenu();
     function renderizarSecoes() {
         return secoes.map((secao: MenuSecao) => (
-            <MenuPrincipalSecao key={secao.titulo} titulo={secao.titulo} mini={mini} aberta={secao.aberta}>
+            <MenuPrincipalSecao key={secao.titulo} titulo={secao.titulo} 
+                                mini={mini} aberta={secao.aberta}
+                                onClick={ ()=>alternarSecao(secao)}>
                 {renderizarItens(secao)}
             </MenuPrincipalSecao>
         ));
@@ -74,6 +34,7 @@ export default function MenuPrincipal() {
                 tag={item.tag}
                 url={item.url}
                 mini={mini}
+                selecionado={item.selecionado}
             />
         ));
     }
