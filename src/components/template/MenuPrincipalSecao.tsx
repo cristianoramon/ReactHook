@@ -12,7 +12,7 @@ interface MenuSecaoProps {
 
 export default function MenuSecao(props: MenuSecaoProps) {
     const { titulo, mini,aberta } = props;
-    console.log(props);
+    //console.log(props);
     // const [aberta, toggleAberta] = useToggle(props.aberta);
          
     return (

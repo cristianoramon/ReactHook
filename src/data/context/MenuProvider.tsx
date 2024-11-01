@@ -11,10 +11,10 @@ const ContextoMenu = React.createContext({});
 export function MenuProvider(props: any) {      
 
     // const ativo = url === router.asPath;
-    console.log("MENU",secoesMenu);
+
     const [mini,toggleMini, miniTrue, miniFalse] = useBoolean(false);
     const [secoes, setSecoes] = useState<any>(secoesMenu);
-    console.log("seccoes",secoesMenu);
+ 
     let tamanho = useTamanhoJanela();
     const router = useRouter();
 
@@ -29,7 +29,7 @@ export function MenuProvider(props: any) {
     useEffect(() => {       
         setSecoes(() => selecionarItem(router.asPath));
         //selecionarItem(router.asPath);
-        console.log('secoes',secoes);
+        
     },[router.asPath]);
 
     function alternarSecao(secaoSelecionada: MenuSecao) {
@@ -55,11 +55,10 @@ export function MenuProvider(props: any) {
             let novosItens = secao.itens.map((item: any) => {
                return {...item, selecionado: item.url === url}
             })
-            console.log('secao',secao);
-            console.log('novosItens',novosItens);
+            
             return {...secao,itens:novosItens};
         });
-        console.log('novasSecoes',novasSecoes);
+        
         return novasSecoes;       
     }
     
